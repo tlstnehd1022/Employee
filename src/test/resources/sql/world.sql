@@ -16,9 +16,26 @@ create table member(
 
 );
 
+--
+-- Member CRUD ( Create, Read, Update, Delete)
+--
+
+-- Create
 insert into member
 (email, name, password, register_date)
 values
 ('xxx@yyy', '홍길동', '1234', '2015/11/11');
 
-select * from member
+-- Read
+select * from member;
+
+-- Update
+update member
+	set name = '홍순이',
+		password = '9876'
+	where id = 3
+
+-- Delete
+delete from member where id = '1';
+
+
