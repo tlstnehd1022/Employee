@@ -39,3 +39,25 @@ update member
 delete from member where id = '1';
 
 
+--
+-- City
+--
+
+-- selectAll
+select  id,
+		name,
+		countrycode,
+		district,
+		population
+   from city
+   
+   
+-- select By CountryCode ( String countryCode)
+select id,
+	   name,
+	   countrycode,
+	   district,
+	   population
+  from city
+ where countrycode = 'KOR'
+
