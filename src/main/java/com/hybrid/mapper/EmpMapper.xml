@@ -1,6 +1,64 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.hybrid.mapper.CityMapper">
-  
+<mapper namespace="com.hybrid.mapper.EmpMapper">
+   
+    <sql id="empFrom">
+        select empno,
+			   ename,
+			   job,
+			   mgr,
+			   hiredate,
+			   sal
+	      from emp
+    </sql>
+    
+    <sql id="empFromWithDept">
+        select e.empno as emp_empno,
+        	   e.ename as emp_ename,
+        	   e.job as emp_job,
+        	   e.mgr as emp_mgr,
+        	   e.hiredate as emp_hiredate,
+        	   e.sal as emp_sal,
+        	   d.deptno as dept_deptno,
+        	   d.dname as dept_dname,
+        	   d.loc as dept_loc
+          from emp e inner join dept d
+            on e.deptno = d.deptno
+    </sql>
+    
+    <resultMap type="com.hybrid.model.Emp" id="empResultMap">
+        <id property="empno" column="emp_empno" />
+        <result property="ename" column="emp_ename" />
+        <result property="job" column="emp_job" />
+        <result property="mgr" column="emp_mgr" />
+        <result property="hiredate" column="emp_hiredate" />
+        <result property="sal" column="emp_sal" />
+        <association property="dept" javaType="com.hybrid.model.Dept">
+            <id property="deptno" column="dept_deptno"/>
+            <result property="dname" column="dept_dname"/>
+            <result property="loc" column="dept_loc"/>
+        </association>
+        
+    </resultMap>
+    	
+    <select id="selectAll">
+  		<include refid="empFrom" />
+        
+    </select>
+    
+    <select id="selectByEmpno">
+        <include refid="empFrom" />
+        where empno = ${empno}
+    </select>
+    
+    <select id="selectAllWithDept" resultMap="empResultMap">
+        <include refid="empFromWithDept" />
+        
+    </select>
+    
+    <select id="selectByEmpnoWithDept" resultMap="empResultMap">
+        <include refid="empFromWithDept" />
+        where e.empno = ${empno}
+    </select>
     
 </mapper>

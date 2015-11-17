@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+<!-- 빈 펙토리는 default 가 싱글톤이다 -->
+<!-- NEW 생성 95% 사용됨 -->
+<bean class="java.util.Date" >
+	<property name="year" value="115" />
+	<!-- date 의 기본이 1900 을빼야함 2015 년을 나타내려면 115 -->
+	<property name="month" value="08" />
+	<property name="date" value="10" />
+</bean>
+
+<bean class="com.hybrid.model.Member" scope="prototype">
+		<!-- 기본적으로 싱글톤으로 관리되고 할대마다 new로 새로운거를 생성하는것이 prototype 이다. -->
+
+</bean>
+
+<!-- factory metohd 생성! (스테틱 메소드) 2% -->
+<bean id="documentBuilderFacotry" class="javax.xml.parsers.DocumentBuilderFactory" factory-method="newInstance">
+
+</bean>
+
+<!-- FactoryBean 생성! 한 3% 사용됨 -->
+<bean class="com.hybrid.bean.DocumentFactoryBean">
+	<constructor-arg ref="documentBuilderFacotry" />
+	<property name="path" value="com/hybrid/bean/dept.xml" />
+	
+
+</bean>
+
+</beans>

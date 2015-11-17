@@ -82,6 +82,7 @@ values
 
 
   select deptno,
-      		 dname,
-      		 loc
-        from dept 
+      	 dname,
+      	 loc,
+      	 e.empno
+    from dept 
