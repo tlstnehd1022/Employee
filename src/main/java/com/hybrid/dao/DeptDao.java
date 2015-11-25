@@ -45,5 +45,21 @@ public class DeptDao {
 	
 		return mapper.selectByDeptnoWithEmps(deptno);
 	}
+	
+	public int insert(Dept dept){
+		return mapper.insert(dept);
+	}
+	
+	public int delete(Dept dept){
+		return mapper.delete(dept);
+	}
+	
+	public int deleteGreaterThan(int deptno){
+		return mapper.deleteGreaterThan(deptno);
+	}
+
+	public List<Dept> selectGraterThan(int deptno) {
+		return mapper.selectGraterThan(deptno);
+	}
 
 }

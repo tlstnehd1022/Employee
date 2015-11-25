@@ -83,6 +83,74 @@ values
 
   select deptno,
       	 dname,
-      	 loc,
-      	 e.empno
+      	 loc
+      	
     from dept 
+
+    
+ select *
+ from city
+ order by countrycode asc, name asc
+ 
+ select rownum, c.*
+ from city c
+-- where rownum >= 11
+-- and rownum <=20
+ order by countrycode asc, name asc
+ 
+ select out.*
+   from (
+   		select rownum rn,
+   			   c.* 
+   		  from (
+   		  		select *
+   		  		  from city 
+   		  		 order by countrycode asc, 
+   		  		 		  name asc
+   		  	   ) c
+   		) out
+ where rn >=11
+ and rn < 20
+ 
+ select * from city order by countrycode asc, name asc
+ 
+ 
+ 
+ create table country (
+ 	code			char(3),
+ 	name			char(52),
+    continent 		char(50),
+	region 			char(26),
+	surfacearea 	numeric(10,2),
+	indepyear 		numeric(6),
+	population 		numeric(11),
+	lifeexpectancy 	numeric(3,1),
+	gnp				numeric(10,2),
+	gnpold 			numeric(10,2),
+	localname 		char(45),
+	governmentform 	char(45),
+	headofstate 	char(60),
+	capital 		numeric(11),
+	code2 			char(2),
+	constraint pk_country_code primary key (code)
+ )
+ 
+ 
+ create table country (
+  code	 			char(3) not null default '',
+--  name 				char(52) not null default '',
+--  continent 		enum('asia','europe','north america','africa','oceania','antarctica','south america') not null default 'asia',
+--  region 			char(26) not null default '',
+--  surfacearea 		numeric(10,2) not null default '0.00',
+--  indepyear 		numeric(6) default null,
+--  population 		numeric(11) not null default '0',
+--  lifeexpectancy 	numeric(3,1) default null,
+--  gnp 				numeric(10,2) default null,
+--  gnpold 			numeric(10,2) default null,
+--  localname 		char(45) not null default '',
+--  governmentform 	char(45) not null default '',
+--  headofstate 		char(60) default null,
+--  capital 			numeric(11) default null,
+--  code2 			char(2) not null default '',
+  primary key (code)
+) 

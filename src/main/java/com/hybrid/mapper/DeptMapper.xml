@@ -78,4 +78,38 @@
        where d.deptno = #{deptno}
   </select>
   
+  <insert id="insert" parameterType="com.hybrid.model.Dept">
+      insert into dept 
+      (
+      	deptno,
+      	dname,
+      	loc
+      )
+      values
+      (
+      	#{deptno},
+      	#{dname},
+      	#{loc}
+      )
+      
+  </insert>
+  
+  <delete id="delete" parameterType="com.hybrid.model.Dept">
+      delete from dept
+      where deptno = #{deptno}
+      
+  </delete>
+
+  <select id="selectGraterThan" resultType="com.hybrid.model.Dept">
+      <include refid="deptFrom" />
+      where deptno >= #{deptno}
+      
+  </select>
+  
+  <delete id="deleteGreaterThan" parameterType="int">
+      delete from dept
+      where deptno >= #{deptno}
+      
+  </delete>
+  
 </mapper>

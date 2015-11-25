@@ -12,9 +12,9 @@ import com.hybrid.mapper.CityMapper;
 import com.hybrid.model.City;
 import com.hybrid.util.pagination;
 
-public class CityTransfer {
+public class CityTransferOracle {
 
-	static Log log = LogFactory.getLog(CityTransfer.class);
+	static Log log = LogFactory.getLog(CityTransferOracle.class);
 	
 	public static void main(String[] args) {
 		
@@ -22,21 +22,21 @@ public class CityTransfer {
 		ctx = new GenericXmlApplicationContext("spring/beans_mysql.xml",
 											   "spring/beans_oracle.xml");
 
-		//리스트 추가햇을때 경로가 달라졌을때.
-//		SqlSessionTemplate sqlSession = (SqlSessionTemplate) ctx.getBean("mysqlSqlSession");
-//		List<City> list = sqlSession.selectList("com.hybrid.mapper.CityMapper.selectAll");
+		// Oracle ==> MySQL
+
 		
 		CityMapper mysqlCityMapper = (CityMapper) ctx.getBean("mysqlCityMapper");
 		CityMapper oracleCityMapper = (CityMapper) ctx.getBean("oracleCityMapper");
 		
-		oracleCityMapper.deleteAll();
+		int deleteCount = mysqlCityMapper.deleteAll();
+		log.info("MySQL City Delete Count = " + deleteCount);
 		
-//		List<City> list = mysqlCityMapper.selectAll();
-		
-		pagination paging = new pagination();
-		paging.setTotalItem(4079);
-		paging.setPageNo(2);
-		List<City> list = mysqlCityMapper.selectPage(paging);
+		List<City> list = oracleCityMapper.selectAll();
+//		
+//		pagination paging = new pagination();
+//		paging.setTotalItem(4079);
+//		paging.setPageNo(2);
+//		List<City> list = mysqlCityMapper.selectPage(paging);
 		
 		log.info("City size = " + list.size());
 
@@ -49,12 +49,18 @@ public class CityTransfer {
 				
 				System.out.print(".");
 				System.out.flush();
-				oracleCityMapper.insert(t);
+				
+				if( t.getDistrict() == null)
+					t.setDistrict("");
+				
+				int rtn = oracleCityMapper.insert(t);
+				log.info("rtn = " + rtn);
 				
 			}
 		});
 		
-		
+		int cityCount = mysqlCityMapper.selectCount();
+		log.info("MYSQL City Total Count = " + cityCount);
 		
 		
 		

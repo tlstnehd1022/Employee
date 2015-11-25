@@ -2,6 +2,10 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.hybrid.mapper.CityMapper">
   
+    <select id="selectCount" resultType="int">
+        select count(*) from city
+    </select>
+    
     <select id = "selectAll" resultType="com.hybrid.model.City">
        select  id,
 		       name,
@@ -10,6 +14,40 @@
 			   population
    		  from city
     </select>
+    
+    <select id = "selectPage" 
+       	    parameterType="com.hybrid.util.pagination" 
+       	    resultType="com.hybrid.model.City"
+       	    databaseId="mysql">
+       select  id,
+		       name,
+			   countrycode,
+			   district,
+			   population
+   		  from city
+   		 order by countrycode asc, name asc
+   		 limit #{start}, #{length}
+    </select>
+    
+    <select id = "selectPage" 
+            parameterType="com.hybrid.util.pagination" 
+            resultType="com.hybrid.model.City"
+            databaseId="oracle">
+	 select out.*
+	   from (
+	   		select rownum rn,
+	   			   c.* 
+	   		  from (
+	   		  		select *
+	   		  		  from city 
+	   		  		 order by countrycode asc, 
+	   		  		 		  name asc
+	   		  	   ) c
+	   		) out
+	 where rn &gt;= #{firstItem}
+	 and rn &lt;= #{lastItem}
+    </select>
+    
     
     <select id="selectByCountryCode" parameterType="string">
         select id,
@@ -42,5 +80,11 @@
 		        
         
     </insert>
+    
+    <delete id="deleteAll">
+        delete from city
+        
+    </delete>
+    
     
 </mapper>

@@ -8,7 +8,8 @@
 			   job,
 			   mgr,
 			   hiredate,
-			   sal
+			   sal,
+			   comm
 	      from emp
     </sql>
     
@@ -48,7 +49,13 @@
     
     <select id="selectByEmpno">
         <include refid="empFrom" />
-        where empno = ${empno}
+        where empno = #{empno}
+    </select>
+    
+    
+    <select id="selectByDeptno" resultType="com.hybrid.model.Emp">
+        <include refid="empFrom" />
+        where deptno = #{deptno}
     </select>
     
     <select id="selectAllWithDept" resultMap="empResultMap">
@@ -58,7 +65,39 @@
     
     <select id="selectByEmpnoWithDept" resultMap="empResultMap">
         <include refid="empFromWithDept" />
-        where e.empno = ${empno}
+        where e.empno = #{empno}
     </select>
+    
+    <insert id="insert" parameterType="com.hybrid.model.Emp">
+        insert into emp 
+        (
+			empno,
+        	ename,
+        	job,
+        	mgr,
+        	hiredate,
+        	sal,
+        	comm,
+        	deptno       
+        )
+        values
+        (
+        	#{empno},
+        	#{ename,jdbcType=VARCHAR},
+        	#{job,jdbcType=VARCHAR},
+        	#{mgr,jdbcType=NUMERIC},
+        	#{hiredate,jdbcType=TIMESTAMP},
+        	#{sal,jdbcType=NUMERIC},
+        	#{comm,jdbcType=NUMERIC},
+        	#{dept.deptno}
+
+        )
+        
+    </insert>
+    
+    <delete id="delete" parameterType="com.hybrid.model.Emp">
+        delete from emp
+        where empno = #{empno}
+    </delete>
     
 </mapper>

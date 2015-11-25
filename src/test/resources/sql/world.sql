@@ -67,3 +67,20 @@ select id,
      on ci.countrycode = co.code
   where co.code = 'KOR'
 
+
+  
+  
+  
+  
+  
+  
+  
+  
+  select id,
+  		 name,
+  		 countrycode,
+  		 district,
+  		 population
+  	from city
+   order by countrycode asc, name asc
+   limit 20, 5

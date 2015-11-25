@@ -13,5 +13,11 @@ public interface DeptMapper {
 	
 	Dept selectByDeptno(int deptno);
 	Dept selectByDeptnoWithEmps(int deptno);
+	int insert(Dept dept);
+	
+	int delete(Dept dept);
+	int deleteGreaterThan(int deptno);
+	
+	List<Dept> selectGraterThan(int deptno);
 	
 }

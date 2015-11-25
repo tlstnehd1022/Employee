@@ -23,11 +23,16 @@ public class LogDaoAspect {
 	 								Dao 로 끝나는 모든거 에있는
 	 								모든 메소드에
 	 								모든 파라미터*/
-	public void logcut(){
+	public void dao(){
 		
 	}
 	
-	@Before("logcut()")
+	@Pointcut("execution(public * com.hybrid.dao.*Service.*(..))")
+	public void service(){
+		
+	}
+	
+	@Before("dao() || service()")
 //	마찬가지로 @before 를 해줘야지 before 메소드가 된다. 
 
 	public void before(JoinPoint jp){
@@ -38,7 +43,7 @@ public class LogDaoAspect {
 					   + " START ");
 	}
 	
-	@After("logcut()")
+	@After("dao() || service()")
 	public void after(JoinPoint jp){
 		
 		Log log = LogFactory.getLog(jp.getTarget().getClass());
